@@ -106,14 +106,15 @@
                 <div class="col-lg-11">
                     <form action="{{ url()->current() }}" method="GET" class="card shadow-sm border-0 p-3 bg-light text-start">
                         <div class="row g-2 align-items-center">
+
                             {{-- Input Pencarian --}}
                             <div class="col-md-4">
                                 <div class="input-group">
                                     <span class="input-group-text bg-white border-end-0">
                                         <i class="bi bi-search text-muted"></i>
                                     </span>
-                                    <input type="text" name="search" class="form-control border-start-0" 
-                                           placeholder="Cari judul, penulis..." 
+                                    <input type="text" name="search" class="form-control border-start-0"
+                                           placeholder="Cari judul, penulis..."
                                            value="{{ request('search') }}">
                                 </div>
                             </div>
@@ -130,7 +131,7 @@
                                 </select>
                             </div>
 
-                            {{-- Filter Ketersediaan --}}
+                            {{-- Filter Ketersediaan Stok --}}
                             <div class="col-md-2">
                                 <select name="status" class="form-select" onchange="this.form.submit()">
                                     <option value="">Semua Status</option>
@@ -143,7 +144,7 @@
                                 </select>
                             </div>
 
-                            {{-- Sort / Urutkan --}}
+                            {{-- Pengurutan --}}
                             <div class="col-md-2">
                                 <select name="sort" class="form-select" onchange="this.form.submit()">
                                     <option value="">Urutkan: Terbaru</option>
@@ -155,16 +156,15 @@
                                 </select>
                             </div>
 
-                            {{-- Tombol Reset --}}
-                            <div class="col-md-1 d-flex">
+                            {{-- Tombol Terapkan & Reset --}}
+                            <div class="col-md-1 d-flex gap-1">
+                                <button class="btn btn-primary w-100" type="submit" title="Terapkan">
+                                    <i class="bi bi-funnel"></i>
+                                </button>
                                 @if(request('search') || request('penerbit') || request('status') || request('sort'))
                                     <a href="{{ url()->current() }}" class="btn btn-outline-danger w-100" title="Reset Semua Filter">
                                         <i class="bi bi-arrow-counterclockwise"></i>
                                     </a>
-                                @else
-                                    <button class="btn btn-primary w-100" type="submit" title="Terapkan">
-                                        <i class="bi bi-funnel"></i>
-                                    </button>
                                 @endif
                             </div>
                         </div>
@@ -172,9 +172,10 @@
                 </div>
             </div>
 
+            {{-- Ringkasan filter aktif --}}
             @if(request('search') || request('penerbit') || request('status') || request('sort'))
                 <p class="text-muted mt-3 small">
-                    Menampilkan hasil filter: 
+                    Menampilkan hasil filter:
                     @if(request('search')) pencarian <strong>"{{ request('search') }}"</strong>@endif
                     @if(request('penerbit')) &bull; penerbit <strong>"{{ request('penerbit') }}"</strong>@endif
                     @if(request('status')) &bull; status <strong>"{{ request('status') === 'tersedia' ? 'Stok Tersedia' : 'Stok Habis' }}"</strong>@endif
@@ -184,7 +185,7 @@
             @endif
         </div>
 
-        {{-- Grid Katalog Buku --}}
+        {{-- Grid Katalog Buku (kartu dengan sampul) --}}
         <div class="row">
             @forelse($buku as $item)
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
@@ -243,4 +244,3 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
